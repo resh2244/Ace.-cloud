@@ -1,0 +1,71 @@
+{
+  "entities": {
+    "user": {
+      "title": "User",
+      "description": "User profile and authentication record",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "format": "email", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "vm": {
+      "title": "Virtual Machine",
+      "description": "Virtual machine instance record persisted in Firestore",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "name": { "type": "string", "maxLength": 128 },
+        "hostname": { "type": "string", "maxLength": 128 },
+        "osImage": { "type": "string", "maxLength": 64 },
+        "status": { "type": "string", "enum": ["queued", "provisioning", "running", "stopped", "deleting", "deleted", "failed", "unknown"] },
+        "vcpu": { "type": "integer" },
+        "ramMb": { "type": "integer" },
+        "diskGb": { "type": "integer" },
+        "hostId": { "type": "string", "maxLength": 64 },
+        "ipAddress": { "type": "string", "maxLength": 64 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "hostname", "osImage", "status", "userId"]
+    },
+    "host": {
+      "title": "Physical Host",
+      "description": "KVM Hypervisor Host node",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "name": { "type": "string", "maxLength": 128 },
+        "address": { "type": "string", "maxLength": 64 },
+        "status": { "type": "string", "enum": ["online", "offline", "maintenance"] },
+        "maintenanceMode": { "type": "boolean" },
+        "cpuTotal": { "type": "integer" },
+        "ramTotalMb": { "type": "integer" },
+        "storageTotalGb": { "type": "integer" },
+        "cpuUsedPercent": { "type": "number" },
+        "ramUsedMb": { "type": "integer" },
+        "storageUsedGb": { "type": "integer" },
+        "runningVmsCount": { "type": "integer" },
+        "lastHeartbeat": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "address", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "user",
+      "description": "User profiles"
+    },
+    "/vms/{vmId}": {
+      "schema": "vm",
+      "description": "Virtual machines"
+    },
+    "/hosts/{hostId}": {
+      "schema": "host",
+      "description": "Compute hypervisor hosts"
+    }
+  }
+}

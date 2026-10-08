@@ -1,0 +1,6 @@
+{
+  "name": "Simone Cloud",
+  "description": "Secure private-cloud control panel for managing virtual machines running on your own Linux server.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

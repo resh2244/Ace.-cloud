@@ -1,0 +1,16 @@
+[Unit]
+Description=Simone Cloud Node Agent for KVM/libvirt Hypervisor
+After=network.target libvirtd.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/simone-agent
+ExecStart=/usr/bin/python3 -m simone_agent.agent
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
